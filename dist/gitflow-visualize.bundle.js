@@ -863,9 +863,37 @@ var memoize = require('lodash/memoize');
 			}, 10);
 		}
 	
+
+	
+		
+
 		self.drawing = (function () {
 			var self = {};
-	
+
+			self.annotateResults = function(arrIds) {
+			
+			if (!arrIds || arrIds.length == 0) {
+				 d3.selectAll(".commit-msg").classed("dim", false).classed("highlight", false);
+				 d3.selectAll(".commit-dot").classed("dim", false);
+				 d3.selectAll(".arrow").style("opacity", "1");
+				 return;
+				 }
+
+				 for (var id in data.commits) {
+				 if (arrIds.indexOf(id.slice(0, 7)) > -1) {
+			console.log("hit id" + id);
+				   d3.selectAll("#msg-" + id).classed("dim", false).classed("highlight", true).classed("results", true);
+				   d3.selectAll("#commit-" + id).classed("dim", false);
+				   d3.selectAll(".arrow-to-" + id).style("opacity", "1");
+				 } else {
+			console.log("not hit"+ id.slice(0, 7));
+				   d3.selectAll("#msg-" + id).classed("dim", true).classed("highlight", false).classed("results", false);
+				   d3.selectAll("#commit-" + id).classed("dim", true);
+				   d3.selectAll(".arrow-to-" + id).style("opacity", "0.2");  
+				 }
+				 }
+			};
+
 			self.updateHighlight = function () {
 			  var highlightCommits = function (arrIds) {
 				if (!arrIds || arrIds.length == 0) {
@@ -1275,16 +1303,18 @@ var memoize = require('lodash/memoize');
 						  }]);
 					  }
 					  if(displayState.style == "ancestry"){
-						  items.push(["Stop highlighting", function(){
+						  items.push(["Select Start Commit", function(){
 							displayState.style = "none";
+							document.getElementById('startcommit').value = a.id.slice(0, 7);
 							displayState.root = null;
 							self.updateHighlight();
 						  }]);
 					  }
 					  if(displayState.style !== "ancestry" ||  a.id !== displayState.root){
-						  items.push(["Highlight ancestry from here", function(){
+						  items.push(["Select End Commit", function(){
 							displayState.style = "ancestry";
 							displayState.root = a.id;
+							document.getElementById('endcommit').value = a.id.slice(0, 7);
 							self.updateHighlight();
 						  }]);
 					  }

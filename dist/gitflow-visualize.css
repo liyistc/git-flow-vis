@@ -76,6 +76,8 @@ line {
   height: 35px; }
   .commit-msg.selected {
     background-color: #ccd9ea; }
+  .commit-msg.results {
+    background-color: #f4cb42; }
   .commit-msg:hover {
     background-color: #f5f5f5; }
   .commit-msg.dim {
