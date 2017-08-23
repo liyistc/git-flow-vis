@@ -881,12 +881,12 @@ var memoize = require('lodash/memoize');
 
 				 for (var id in data.commits) {
 				 if (arrIds.indexOf(id.slice(0, 7)) > -1) {
-			console.log("hit id" + id);
+			//console.log("hit id" + id);
 				   d3.selectAll("#msg-" + id).classed("dim", false).classed("highlight", true).classed("results", true);
 				   d3.selectAll("#commit-" + id).classed("dim", false);
 				   d3.selectAll(".arrow-to-" + id).style("opacity", "1");
 				 } else {
-			console.log("not hit"+ id.slice(0, 7));
+			//console.log("not hit"+ id.slice(0, 7));
 				   d3.selectAll("#msg-" + id).classed("dim", true).classed("highlight", false).classed("results", false);
 				   d3.selectAll("#commit-" + id).classed("dim", true);
 				   d3.selectAll(".arrow-to-" + id).style("opacity", "0.2");  
