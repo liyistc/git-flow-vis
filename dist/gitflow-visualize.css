@@ -57,7 +57,7 @@ line {
 .gutter {
   width: 12px;
   position: absolute;
-  margin-left: 290px;
+  margin-left: 190px;
   z-index: 100;
   cursor: ew-resize; }
   .gutter .gutterline {
