@@ -44,7 +44,7 @@ line {
   position: fixed;
   bottom: 0px;
   height: 10px;
-  width: 290px;
+  width: 190px;
   overflow-x: scroll; }
   .commits-graph-container .scroll-container .scrollme {
     background-color: transparent;
@@ -52,7 +52,7 @@ line {
 
 .messages {
   position: relative;
-  padding-left: 300px; }
+  padding-left: 200px; }
 
 .gutter {
   width: 12px;
