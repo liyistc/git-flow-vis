@@ -880,13 +880,13 @@ var memoize = require('lodash/memoize');
 				 }
 
 				 for (var id in data.commits) {
-				 if (arrIds.indexOf(id.slice(0, 7)) > -1) {
+				 if (hunkIds.indexOf(id.slice(0, 7)) > -1) {
 			//console.log("hit id" + id);
-				   d3.selectAll("#msg-" + id).classed("dim", false).classed("highlight", true).classed("results", true).classed("hunks", false);
+				   d3.selectAll("#msg-" + id).classed("dim", false).classed("highlight", true).classed("results", false).classed("hunks", true);
 				   d3.selectAll("#commit-" + id).classed("dim", false);
 				   d3.selectAll(".arrow-to-" + id).style("opacity", "1");
-				 } else if (hunkIds.indexOf(id.slice(0, 7)) > -1) {
-				   d3.selectAll("#msg-" + id).classed("dim", false).classed("highlight", true).classed("results", false).classed("hunks", true);
+				 } else if (arrIds.indexOf(id.slice(0, 7)) > -1) {
+				   d3.selectAll("#msg-" + id).classed("dim", false).classed("highlight", true).classed("results", true).classed("hunks", false);
 				   d3.selectAll("#commit-" + id).classed("dim", false);
 				   d3.selectAll(".arrow-to-" + id).style("opacity", "1");
 				 } else {
