@@ -870,9 +870,9 @@ var memoize = require('lodash/memoize');
 		self.drawing = (function () {
 			var self = {};
 
-		    self.annotateResults = function(arrIds,hunkIds) {
+		    self.annotateResults = function(arrIds, hunkIds) {
 			
-			if (!arrIds || arrIds.results.length == 0) {
+			if (!arrIds || arrIds.length == 0) {
 				 d3.selectAll(".commit-msg").classed("dim", false).classed("highlight", false);
 				 d3.selectAll(".commit-dot").classed("dim", false);
 				 d3.selectAll(".arrow").style("opacity", "1");
