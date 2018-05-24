@@ -870,9 +870,9 @@ var memoize = require('lodash/memoize');
 		self.drawing = (function () {
 			var self = {};
 
-			self.annotateResults = function(arrIds) {
+		    self.annotateResults = function(arrIds,hunkIds) {
 			
-			if (!arrIds || arrIds.length == 0) {
+			if (!arrIds || arrIds.results.length == 0) {
 				 d3.selectAll(".commit-msg").classed("dim", false).classed("highlight", false);
 				 d3.selectAll(".commit-dot").classed("dim", false);
 				 d3.selectAll(".arrow").style("opacity", "1");
@@ -882,12 +882,16 @@ var memoize = require('lodash/memoize');
 				 for (var id in data.commits) {
 				 if (arrIds.indexOf(id.slice(0, 7)) > -1) {
 			//console.log("hit id" + id);
-				   d3.selectAll("#msg-" + id).classed("dim", false).classed("highlight", true).classed("results", true);
+				   d3.selectAll("#msg-" + id).classed("dim", false).classed("highlight", true).classed("results", true).classed("hunks", false);
+				   d3.selectAll("#commit-" + id).classed("dim", false);
+				   d3.selectAll(".arrow-to-" + id).style("opacity", "1");
+				 } else if (hunkIds.hunks.indexOf(id.slice(0, 7)) > -1) {
+				   d3.selectAll("#msg-" + id).classed("dim", false).classed("highlight", true).classed("results", false).classed("hunks", true);
 				   d3.selectAll("#commit-" + id).classed("dim", false);
 				   d3.selectAll(".arrow-to-" + id).style("opacity", "1");
 				 } else {
 			//console.log("not hit"+ id.slice(0, 7));
-				   d3.selectAll("#msg-" + id).classed("dim", true).classed("highlight", false).classed("results", false);
+				   d3.selectAll("#msg-" + id).classed("dim", true).classed("highlight", false).classed("results", false).classed("hunks", false);
 				   d3.selectAll("#commit-" + id).classed("dim", true);
 				   d3.selectAll(".arrow-to-" + id).style("opacity", "0.2");  
 				 }
