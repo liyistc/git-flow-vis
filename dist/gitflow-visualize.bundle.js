@@ -1330,6 +1330,8 @@ var memoize = require('lodash/memoize');
 						    displayState.style = "none";
 						    displayState.root = null;
 						    displayState.end = null;
+						    document.getElementById('startcommit').value = '';
+						    document.getElementById('endcommit').value = '';
 						    self.updateHighlight();
 						}]);
 					  }
