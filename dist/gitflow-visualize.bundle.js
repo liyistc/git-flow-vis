@@ -91,7 +91,7 @@ var memoize = require('lodash/memoize');
 	
 		var self = {};
 		var data;
-		var displayState = {style:"none", root:null};
+	        var displayState = {style:"none", root:null, end:null};
 		var constants = {
 			rowHeight: 35
 		};
@@ -921,33 +921,52 @@ var memoize = require('lodash/memoize');
 			  };
 	
 			d3.selectAll('.commit-msg.selected').classed("selected", false);
-	
-				switch (displayState.style) {
-					case "none":
-						highlightCommits([]);
-						break;
-					case "ancestry":
-						var root = d3.select("#msg-" + displayState.root);
-						var toHighlight = {};
-						var addIdsAncestry = function (id) {
-							var commit = data.commits[id];
-							if (!commit) return;
-							if (!toHighlight[id]) {
-								toHighlight[id] = true;
-								for (var i = 0; i < commit.parents.length; i++) {
-									addIdsAncestry(commit.parents[i].id);
-								}
-							} else {
-								// prevent cycles
-							}
-						};
-						root.classed("selected", true);
-						addIdsAncestry(displayState.root);
-						highlightCommits(Object.keys(toHighlight));
-						break;
-					default:
-				}
-	
+			    switch (displayState.style) {
+			    case "none":
+				highlightCommits([]);
+				break;
+			    case "ancestry":
+				var root = d3.select("#msg-" + displayState.root);
+				var toHighlight = {};
+				var addIdsAncestry = function (id) {
+				    var commit = data.commits[id];
+				    if (!commit) return;
+				    if (!toHighlight[id]) {
+					toHighlight[id] = true;
+					for (var i = 0; i < commit.parents.length; i++) {
+					    addIdsAncestry(commit.parents[i].id);
+					}
+				    } else {
+					// prevent cycles
+				    }
+				};
+				root.classed("selected", true);
+				addIdsAncestry(displayState.root);
+				highlightCommits(Object.keys(toHighlight));
+				break;
+				case "range":
+				    var root = d3.select("#msg-" + displayState.root);
+				    var end = ds.select("#msg-" + displayState.end);
+				    var toHighlight = {};
+				    var addIdsAncestry = function (root, end) {
+					if (root == end) return;
+					var commit = data.commits[root];
+					if (!commit) return;
+					if (!toHighlight[id]) {
+					    toHighlight[id] = true;
+					    for (var i = 0; i < commit.parents.length; i++) {
+						addIdsAncestry(commit.parents[i].id);
+					    }
+					} else {
+					}
+				    };
+				    root.classed("selected", true);
+				    end.classed("selected", true);
+				    addIdsAncestry(displayState.root, displayState.end);
+				    highlightCommits(Object.keys(toHighlight));
+				    break;
+			    default:
+			    }
 			}
 	
 			var keysInOrder = function (obj) {
@@ -1306,11 +1325,19 @@ var memoize = require('lodash/memoize');
 							drawFromRaw();
 						  }]);
 					  }
+					  if(displayState.style == "range"){
+						items.push(["Clear", function(){
+						    displayState.style = "none";
+						    displayState.root = null;
+						    displayState.end = null;
+						    self.updateHighlight();
+						}]);
+					  }
 					  if(displayState.style == "ancestry"){
 						  items.push(["Select Start Commit", function(){
-							displayState.style = "none";
+							displayState.style = "range";
 							document.getElementById('startcommit').value = a.id.slice(0, 7);
-							displayState.root = null;
+							displayState.end = a.id;
 							self.updateHighlight();
 						  }]);
 					  }
