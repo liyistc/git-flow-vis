@@ -77,7 +77,7 @@ line {
   .commit-msg.selected {
     background-color: #ccd9ea; }
   .commit-msg.results {
-    background-color: #f4cb42; }
+    background-color: #4286f4; }
   .commit-msg.hunks {
     background-color: #A52A2A; }
   .commit-msg:hover {
