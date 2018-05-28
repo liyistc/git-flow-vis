@@ -944,27 +944,27 @@ var memoize = require('lodash/memoize');
 				addIdsAncestry(displayState.root);
 				highlightCommits(Object.keys(toHighlight));
 				break;
-				case "range":
-				    var root = d3.select("#msg-" + displayState.root);
-				    var end = d3.select("#msg-" + displayState.end);
-				    var toHighlight = {};
-				    var addIdsAncestry = function (root, end) {
-					if (root == end) return;
-					var commit = data.commits[root];
-					if (!commit) return;
-					if (!toHighlight[id]) {
-					    toHighlight[id] = true;
-					    for (var i = 0; i < commit.parents.length; i++) {
-						addIdsAncestry(commit.parents[i].id);
-					    }
-					} else {
+			    case "range":
+				var root = d3.select("#msg-" + displayState.root);
+				var end = d3.select("#msg-" + displayState.end);
+				var toHighlight = {};
+				var addIdsAncestry = function (root, end) {
+				    if (root == end) return;
+				    var commit = data.commits[root];
+				    if (!commit) return;
+				    if (!toHighlight[root]) {
+					toHighlight[root] = true;
+					for (var i = 0; i < commit.parents.length; i++) {
+					    addIdsAncestry(commit.parents[i].id, end);
 					}
-				    };
-				    root.classed("selected", true);
-				    end.classed("selected", true);
-				    addIdsAncestry(displayState.root, displayState.end);
-				    highlightCommits(Object.keys(toHighlight));
-				    break;
+				    } else {
+				    }
+				};
+				root.classed("selected", true);
+				end.classed("selected", true);
+				addIdsAncestry(displayState.root, displayState.end);
+				highlightCommits(Object.keys(toHighlight));
+				break;
 			    default:
 			    }
 			}
