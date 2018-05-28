@@ -946,7 +946,7 @@ var memoize = require('lodash/memoize');
 				break;
 				case "range":
 				    var root = d3.select("#msg-" + displayState.root);
-				    var end = ds.select("#msg-" + displayState.end);
+				    var end = d3.select("#msg-" + displayState.end);
 				    var toHighlight = {};
 				    var addIdsAncestry = function (root, end) {
 					if (root == end) return;
